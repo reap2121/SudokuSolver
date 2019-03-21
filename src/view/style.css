@@ -15,7 +15,7 @@
 
 .grid-item {
     border: 2px solid #525252;
-    border-radius: 5px;
+    border-radius: 2px;
     background-color: #c4c4c4;
     padding: 1em;
     color: black;
@@ -31,7 +31,7 @@
 
 #solve-button {
     border-radius: 2px;
-    background-color: #4d63e4;
+    background-color: #989db8;
     border: none;
     color: #FFFFFF;
     text-align: center;
