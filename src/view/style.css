@@ -29,6 +29,10 @@
     grid-column: 2;
 }
 
+.solved-value {
+    color: #00ff22;
+}
+
 #solve-button {
     border-radius: 2px;
     background-color: #989db8;
