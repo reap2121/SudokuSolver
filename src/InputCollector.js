@@ -34,12 +34,18 @@ var fillPossibleSolutionsMatrix = () => {
     {
         for(let j = 0; j < 9; j++)
         {
+            var createdId = `${i}-${j}`;
             possibleSolutionsElement = {
-                id: `${i}-${j}`,
+                id: createdId,
                 possibleValues: "123456789"
             };
 
             possibleSolutionsMatrix.push(possibleSolutionsElement);
+            document.getElementById(createdId).addEventListener("input", onInputEntered);
         }
     }
+}
+
+var onInputEntered = () => {
+    console.log(event.target.id);
 }
