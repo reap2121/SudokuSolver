@@ -5,17 +5,21 @@ var getElementValue = (id) => {
     console.log(value);
 }
 
-var getElementPossibleValues = (id) => {
-    var element;
-
-    possibleSolutionsMatrix.forEach(matrixElement => {
-        if(matrixElement.id == id)
+var getPossibleElement = (id) => {
+    for(let i = 0; i < possibleSolutionsMatrix.length; i++)
+    {
+        if(possibleSolutionsMatrix[i].id == id)
         {
-            element = matrixElement;
+            return possibleSolutionsMatrix[i];
         }
-    });
-    console.log("id: " + element.id)
-    console.log("values: " + element.possibleValues);
+    }
+}
+
+var removeFromPossibleSolutions = (id, value) => {
+    var element = getPossibleElement(id);
+
+    element.possibleValues = element.possibleValues.replace(value, "");
+    console.log(element.possibleValues);
 }
 
 var fillPossibleSolutionsMatrix = () => {
