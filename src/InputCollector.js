@@ -22,6 +22,13 @@ var removeFromPossibleSolutions = (id, value) => {
     console.log(element.possibleValues);
 }
 
+var addToPossibleSolutions = (id, value) => {
+    var element = getPossibleElement(id);
+
+    element.possibleValues += value;
+    console.log(element.possibleValues);
+}
+
 var fillPossibleSolutionsMatrix = () => {
     for(let i = 0; i < 9; i++)
     {
