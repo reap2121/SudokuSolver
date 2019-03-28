@@ -18,8 +18,16 @@ var getPossibleElement = (id) => {
 var removeFromPossibleSolutions = (id, value) => {
     var element = getPossibleElement(id);
 
-    element.possibleValues = element.possibleValues.replace(value, "");
-    console.log(element.possibleValues);
+    if(element != null)
+    {
+        element.possibleValues = element.possibleValues.replace(value, "");
+        console.log(element.possibleValues);
+    }
+    else
+    {
+        console.log(`Element with id ${id} not found.`);
+    }
+    
 }
 
 var addToPossibleSolutions = (id, value) => {
