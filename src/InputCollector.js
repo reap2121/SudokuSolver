@@ -6,13 +6,12 @@ var getElementValue = (id) => {
 }
 
 var getPossibleElement = (id) => {
-    for(let i = 0; i < possibleSolutionsMatrix.length; i++)
-    {
-        if(possibleSolutionsMatrix[i].id == id)
+    return possibleSolutionsMatrix.find((element) => {
+        if(element.id == id)
         {
-            return possibleSolutionsMatrix[i];
+            return true;
         }
-    }
+    })
 }
 
 var removeFromPossibleSolutions = (id, value) => {
