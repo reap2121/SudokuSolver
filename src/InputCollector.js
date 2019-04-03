@@ -19,8 +19,11 @@ var removeFromPossibleSolutions = (id, value) => {
 
     if(element != null)
     {
-        element.possibleValues = element.possibleValues.replace(value, "");
-        console.log(element.possibleValues);
+        if(element.possibleValues.length > 0)
+        {
+            element.possibleValues = element.possibleValues.replace(value, "");
+            console.log("Removed " + value + " from " + id + ". Current possible values: " +  element.possibleValues);
+        }
     }
     else
     {
@@ -54,11 +57,14 @@ var fillPossibleSolutionsMatrix = () => {
 }
 
 var onInputEntered = () => {
-    console.log(event.target.id);
-    console.log(event.target.innerHTML);
-    removeHorizontalCollidingElements(event.target.id, event.target.innerHTML);
-    removeVerticalCollidingElements(event.target.id, event.target.innerHTML);
-    removeInnerCollidingElements(event.target.id, event.target.innerHTML);
+    removeCollidingElements(event.target.id, event.target.innerHTML);
+    getPossibleElement(event.target.id).possibleValues = "";
+}
+
+var removeCollidingElements = (id, value) => {
+    removeHorizontalCollidingElements(id, value);
+    removeVerticalCollidingElements(id, value);
+    removeInnerCollidingElements(id, value);
 }
 
 var removeHorizontalCollidingElements = (id, value) => {
