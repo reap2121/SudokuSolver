@@ -6,12 +6,7 @@ var getElementValue = (id) => {
 }
 
 var getPossibleElement = (id) => {
-    return possibleSolutionsMatrix.find((element) => {
-        if(element.id == id)
-        {
-            return true;
-        }
-    })
+    return possibleSolutionsMatrix.find(element => element.id == id ? true : false);
 }
 
 var removeFromPossibleSolutions = (id, value) => {
