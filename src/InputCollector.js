@@ -17,7 +17,7 @@ var removeFromPossibleSolutions = (id, value) => {
         if(element.possibleValues.length > 0)
         {
             element.possibleValues = element.possibleValues.replace(value, "");
-            console.log("Removed " + value + " from " + id + ". Current possible values: " +  element.possibleValues);
+            //console.log("Removed " + value + " from " + id + ". Current possible values: " +  element.possibleValues);
         }
     }
     else
