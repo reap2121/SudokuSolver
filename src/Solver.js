@@ -6,7 +6,15 @@ var setup = () => {
 }
 
 var solve = () => {
-    solveSingleDigit();
+    //solveSingleDigit();
+    let solved = false;
+    let tableBroke = false;
+
+    while(!solved){
+
+
+        solved = checkIfTableIsSolved();
+    }
 }
 
 var solveSingleDigit = () => {
@@ -24,12 +32,23 @@ var fillCell = (id, value) => {
     //find the next empty cell
     if(document.getElementById(id).innerHTML == "")
     {
+        if(checkCollision(id, value))
+        {
+            //if it breaks the table, go back
+            return true;
+        }
 
+        //fill in & add to object 
+        document.getElementById(id).innerHTML = value; 
+        filledCells[id] = value;
     }
-    //check for collision
-    //if it breaks the table, go back
-    //fill in 
-    //add to object
+    
+}
+
+var checkCollision = (id, value) => {
+    return checkCollisionHorizontal(id, value) ||
+        checkCollisionVertical(id, value) ||
+        checkCollisionInSubgrid(id, value);
 }
 
 var checkCollisionHorizontal = (id, value) => {
@@ -82,4 +101,18 @@ var checkCollisionInSubgrid = (id, value) => {
     }
 
     return false;
+}
+
+var checkIfTableIsSolved = () => {
+    for(let i = 0; i < 9; i++){
+        for(let j = 0; j < 9; j++){
+            if(document.getElementById(`${i}-${j}`).innerHTML == ""){
+                console.log(`found empty cell at ${i}-${j}`);
+                return false;
+            }
+        }
+    }
+
+    console.log('Sudoku is solved');
+    return true;
 }
