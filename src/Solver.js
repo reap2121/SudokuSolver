@@ -1,4 +1,5 @@
 let filledCells = {};
+let currentId = '0-0';
 
 var setup = () => {
     fillPossibleSolutionsMatrix();
@@ -6,43 +7,110 @@ var setup = () => {
 }
 
 var solve = () => {
-    //solveSingleDigit();
     let solved = false;
     let tableBroke = false;
 
     while(!solved){
+        //1. fill cell - if break go to error
+        //2. iterate - go back to step one
+        //error: iterate back, check new number - if break go to error, else go to step 1.
+        tableBroke = !checkNumbers();
 
+        if(tableBroke){
+
+        }
 
         solved = checkIfTableIsSolved();
     }
 }
 
-var solveSingleDigit = () => {
-    possibleSolutionsMatrix.forEach(element => {
-        if(element.possibleValues.length == 1)
-        {
-            document.getElementById(element.id).innerHTML = element.possibleValues;
-            removeCollidingElements(element.id, element.possibleValues);
-            element.possibleValues == "";
+var solveStep = () => {
+    if(checkNumbers()){
+        iterateIdForward();
+        return true;
+    } else {
+        while(!filledCells.hasOwnProperty(currentId)){
+            iterateIdBackward();
         }
-    });
+        console.log('previous cell: ' + currentId);
+        let valueInCell = document.getElementById(currentId).innerHTML;
+        document.getElementById(currentId).innerHTML = "";
+        checkNumbersFrom(valueInCell);
+    }
+}
+
+/**
+ * If a value fits, returns true, else if no value can fit in the cell, returns false.
+ */
+var checkNumbers = () => {
+    for(let i = 1; i <= 9; i++){
+        if(!fillCell(currentId, i)){
+            console.log('Number found: ' + i);
+            return true; 
+        } 
+    }
+
+    console.log('Number not found');
+    return false;
+}
+
+var checkNumbersFrom = (value) => {
+    for(let i = 0; i < 9; i++){
+        if(value == 9) value = 0;
+        if(!fillCell(currentId, value)){
+            console.log('Number found (from): ' + value);
+            return true;
+        }
+        value++;
+    }
+
+    console.log('Number not found (from)');
+    return false;
 }
 
 var fillCell = (id, value) => {
-    //find the next empty cell
     if(document.getElementById(id).innerHTML == "")
     {
         if(checkCollision(id, value))
         {
-            //if it breaks the table, go back
             return true;
         }
 
-        //fill in & add to object 
         document.getElementById(id).innerHTML = value; 
         filledCells[id] = value;
     }
     
+    return false;
+}
+
+var iterateIdBackward = () => {
+    let gridIndex = currentId.split('-')[0];
+    let cellIndex = currentId.split('-')[1];
+
+    if(cellIndex > 0){
+        currentId = `${gridIndex}-${parseInt(cellIndex) - 1}`;
+    } else if(cellIndex == 0 && gridIndex != 0){
+        currentId = `${parseInt(gridIndex) - 1}-8`;
+    }else {
+        console.log('HIBAVANA RENCERBEN');
+    }
+
+    console.log('Current ID backward - ' + currentId);
+}
+
+var iterateIdForward = () => {
+    let gridIndex = currentId.split('-')[0];
+    let cellIndex = currentId.split('-')[1];
+
+    if(cellIndex < 8){
+        currentId = `${gridIndex}-${parseInt(cellIndex) + 1}`;
+    } else if(cellIndex == 8 && gridIndex != 8){
+        currentId = `${parseInt(gridIndex) + 1}-0`;
+    }else {
+        console.log('HIBAVANA RENCERBEN');
+    }
+
+    console.log('Current ID forward - ' + currentId);
 }
 
 var checkCollision = (id, value) => {
