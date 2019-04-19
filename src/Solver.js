@@ -7,10 +7,9 @@ var setup = () => {
 }
 
 var solve = () => {
-    let solved = false;
     let tableBroke = false;
 
-    while(!solved){
+    while(!checkIfTableIsSolved()){
         //1. fill cell - if break go to error
         //2. iterate - go back to step one
         //error: iterate back, check new number - if break go to error, else go to step 1.
@@ -20,7 +19,6 @@ var solve = () => {
 
         }
 
-        solved = checkIfTableIsSolved();
     }
 }
 
@@ -29,14 +27,21 @@ var solveStep = () => {
         iterateIdForward();
         return true;
     } else {
-        while(!filledCells.hasOwnProperty(currentId)){
+        iterateIdBackward();
+        if(!backtrack()){
             iterateIdBackward();
         }
-        console.log('previous cell: ' + currentId);
-        let valueInCell = document.getElementById(currentId).innerHTML;
-        document.getElementById(currentId).innerHTML = "";
-        checkNumbersFrom(valueInCell);
     }
+}
+
+var backtrack = () => {
+    while(!filledCells.hasOwnProperty(currentId)){
+        iterateIdBackward();
+    }
+    console.log('previous cell: ' + currentId);
+    let valueInCell = document.getElementById(currentId).innerHTML;
+    document.getElementById(currentId).innerHTML = "";
+    return checkNumbersFrom(valueInCell);
 }
 
 /**
@@ -55,19 +60,24 @@ var checkNumbers = () => {
 }
 
 var checkNumbersFrom = (value) => {
+    let thisValue = value + 1;
+
     for(let i = 0; i < 9; i++){
-        if(value == 9) value = 0;
-        if(!fillCell(currentId, value)){
-            console.log('Number found (from): ' + value);
+        if(thisValue >= 9) thisValue = 0;
+        if(!fillCell(currentId, thisValue)){
+            console.log('Number found (from): ' + thisValue);
             return true;
         }
-        value++;
+        thisValue++;
     }
 
     console.log('Number not found (from)');
     return false;
 }
 
+/**
+ * If collides, returns true, else if cell was not empty or number found, returns false.
+ */
 var fillCell = (id, value) => {
     if(document.getElementById(id).innerHTML == "")
     {
@@ -78,9 +88,12 @@ var fillCell = (id, value) => {
 
         document.getElementById(id).innerHTML = value; 
         filledCells[id] = value;
+        return false;
+    } else {
+        return false;
     }
     
-    return false;
+
 }
 
 var iterateIdBackward = () => {
