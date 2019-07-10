@@ -1,4 +1,34 @@
+<template>
+    <div>
+        <div id="mainTable" class="main-table" ref="mainTable">
+            <!-- Generated -->
+        </div>
+        <div class="bottom-area">
+            <button id="solve-button" v-on:click="solveSudoku">Solve</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import TableCreator from '../Controller/TableCreator.js'
+import Solver from '../Controller/Solver.js'
+
+export default {
+  name: 'Table',
+  methods: {
+      solveSudoku: function() {
+          Solver.solveSudoku();
+      }
+  },
+  mounted() {
+      TableCreator.createTable(this.$refs.mainTable);
+  }
+}
+</script>
+
+<style>
 .main-table {
+    margin: auto;
     width: 600px;
     height: 650px;
     display: grid;
@@ -25,12 +55,11 @@
 }
 
 .bottom-area {
-    display: grid;
-    grid-column: 2;
+    margin: auto;
 }
 
 .solved-value {
-    color: #00ff22;
+    color: #7fff84;
 }
 
 #solve-button {
@@ -46,3 +75,4 @@
     cursor: pointer;
     margin: 5px;
 }
+</style>
