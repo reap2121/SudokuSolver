@@ -67,6 +67,7 @@ export default {
                     for(let k = 1; k <= 9; k++){
                         if(!this.checkCollision(i, j, k)){
                             document.getElementById(`${i}-${j}`).innerHTML = k;
+                            document.getElementById(`${i}-${j}`).className += " solved-value";
                             if(this.solveSudoku()) {
                                 return true;
                             } else {

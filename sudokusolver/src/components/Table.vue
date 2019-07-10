@@ -59,7 +59,7 @@ export default {
 }
 
 .solved-value {
-    color: #00ff22;
+    color: #7fff84;
 }
 
 #solve-button {
